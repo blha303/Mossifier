@@ -21,9 +21,7 @@ public class Mossifier extends JavaPlugin implements Listener {
 
 	public Block getFirstNotAir(List<Block> lob) { // With thanks to meem1029 :)
 		for (Block b : lob) {
-			if (b.getType() != Material.AIR) {
-				return b;
-			}
+			if (b.getType() != Material.AIR) return b;
 		}
 		return null;
 	}
@@ -32,11 +30,9 @@ public class Mossifier extends JavaPlugin implements Listener {
 	public void onInteract(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
 		ItemStack item = event.getItem();
+		if (item == null) return;
 		Block block = getFirstNotAir(p.getLineOfSight(null, 10));
-		
-		if (block == null) {
-			return;
-		}
+		if (block == null) return;
 
 		if (item.getType() == Material.INK_SACK && item.getDurability() == 15) { // If item is bonemeal...
 			if (block.getType() == Material.COBBLESTONE) { // ... and the block clicked is cobblestone...
@@ -55,7 +51,7 @@ public class Mossifier extends JavaPlugin implements Listener {
 				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player.
 				p.getInventory().setItemInHand(item);
 				return;
-			} else { return; }
+			}
 		}
 		return;
 	}
