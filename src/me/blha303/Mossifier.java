@@ -1,6 +1,5 @@
 package me.blha303;
 
-import java.util.HashSet;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -20,7 +19,7 @@ public class Mossifier extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(this, this);
 	}
 
-	public Block getFirstNotAir(List<Block> lob) {
+	public Block getFirstNotAir(List<Block> lob) { // With thanks to meem1029 :)
 		for (Block b : lob) {
 			if (b.getType() != Material.AIR) {
 				return b;
@@ -33,29 +32,27 @@ public class Mossifier extends JavaPlugin implements Listener {
 	public void onInteract(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
 		ItemStack item = event.getItem();
-		// Block block = event.getClickedBlock();
-		HashSet<Byte> ignore = new HashSet<Byte>();
-		ignore.add((byte) Material.AIR.hashCode());
-		List<Block> los = p.getLineOfSight(null, 10);
-		Block block = getFirstNotAir(los);
+		Block block = getFirstNotAir(p.getLineOfSight(null, 10));
 		
 		if (block == null) {
 			return;
 		}
 
-		if (item.getTypeId() == 351 && item.getDurability() == 15) {
-			if (block.getTypeId() == 4) {
-				block.setTypeId(48);
-				item.setAmount(item.getAmount() - 1);
+		if (item.getType() == Material.INK_SACK && item.getDurability() == 15) { // If item is bonemeal...
+			if (block.getType() == Material.COBBLESTONE) { // ... and the block clicked is cobblestone...
+				block.setType(Material.MOSSY_COBBLESTONE); // ... set the block to moss stone,
+				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player
 				p.getInventory().setItemInHand(item);
 				return;
-			} else if (block.getTypeId() == 9) {
-				Location lploc = block.getRelative(BlockFace.UP).getLocation();
-				lploc.getBlock().setTypeId(111);
+			} else if (block.getType() == Material.WATER) { // ... and the block clicked is water...
+				Location lploc = block.getRelative(BlockFace.UP).getLocation(); // get the block space above it,
+				lploc.getBlock().setType(Material.WATER_LILY); // ... set that block to a lilypad,
+				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player.
+				p.getInventory().setItemInHand(item);
 				return;
-			} else if (block.getTypeId() == 98 && block.getData() == 0) { 
-				block.setData((byte) 1);
-				item.setAmount(item.getAmount() - 1);
+			} else if (block.getType() == Material.SMOOTH_BRICK && block.getData() == 0) { // ... and the block clicked is stone bricks... 
+				block.setData((byte) 1); // ... set the block to moss bricks,
+				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player.
 				p.getInventory().setItemInHand(item);
 				return;
 			} else { return; }
