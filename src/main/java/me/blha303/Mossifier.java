@@ -24,7 +24,7 @@ public class Mossifier extends JavaPlugin implements Listener {
 		Block block = event.getClickedBlock();
 		if (block == null) return;
 
-		if (item.getType() == Material.INK_SACK && item.getDurability() == 15) { // If item is bonemeal...
+		if (item.getType() == Material.BONE_MEAL) { // If item is bonemeal...
 			if (block.getType() == Material.COBBLESTONE) { // ... and the block clicked is cobblestone...
 				block.setType(Material.MOSSY_COBBLESTONE); // ... set the block to moss stone,
 				if (p.getGameMode().equals(GameMode.CREATIVE)) {
@@ -33,8 +33,8 @@ public class Mossifier extends JavaPlugin implements Listener {
 				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player
 				p.getInventory().setItemInHand(item);
 				return;
-			} else if (block.getType() == Material.SMOOTH_BRICK && block.getData() == 0) { // ... and the block clicked is stone bricks... 
-				block.setData((byte) 1); // ... set the block to moss bricks,
+			} else if (block.getType() == Material.STONE_BRICKS) { // ... and the block clicked is stone bricks... 
+				block.setType(Material.MOSSY_STONE_BRICKS);
 				if (p.getGameMode().equals(GameMode.CREATIVE)) {
 					return;
 				}
