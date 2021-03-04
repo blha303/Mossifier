@@ -31,7 +31,7 @@ public class Mossifier extends JavaPlugin implements Listener {
 					return;
 				}
 				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player
-				p.getInventory().setItemInHand(item);
+				p.getInventory().setItemInMainHand(item);
 				return;
 			} else if (block.getType() == Material.STONE_BRICKS) { // ... and the block clicked is stone bricks... 
 				block.setType(Material.MOSSY_STONE_BRICKS);
@@ -39,7 +39,7 @@ public class Mossifier extends JavaPlugin implements Listener {
 					return;
 				}
 				item.setAmount(item.getAmount() - 1); // and take one bonemeal from the player.
-				p.getInventory().setItemInHand(item);
+				p.getInventory().setItemInMainHand(item);
 				return;
 			}
 		}
